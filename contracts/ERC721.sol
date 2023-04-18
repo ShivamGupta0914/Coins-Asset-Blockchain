@@ -100,6 +100,7 @@ contract Assets is IERC721 {
     * @param _assetID is the id of the NFT.
     */
     function exchangeCoins(uint256 _assetID) external {
+        require(msg.sender != owner[_assetID], "you already own this token");
         require(prices[_assetID] > 0, "this asset is not for sell");
         address currentOwner = owner[_assetID];
         coins.transferFrom(msg.sender, currentOwner, prices[_assetID]);
@@ -233,3 +234,26 @@ contract Assets is IERC721 {
    
 }
 
+// example contracts for testing uncomment when performing testing
+
+contract B is IERC721Receiver {
+    function onERC721Received(
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        bytes calldata _data
+    ) external pure returns (bytes4) {
+        return bytes4(abi.encodeWithSignature("onERC721Received(address,address,uint256,bytes)", _from, _to, _tokenId, _data));
+    }
+}
+
+contract C is IERC721Receiver {
+    function onERC721Received(
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        bytes calldata _data
+    ) external pure returns (bytes4) {
+        return bytes4(abi.encodeWithSignature("onERC721Received(address,address,uint256)", _from, _to, _tokenId));
+    }
+}
