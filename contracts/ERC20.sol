@@ -1,9 +1,10 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 import "./IERC20.sol";
+
 /**
  * @dev Implementation of the {IERC20} interface.
- * which implements the Fungible ERC20 token
+ * which implements the Fungible ERC20 token.
 */
 
 contract Coins is IERC20 {
